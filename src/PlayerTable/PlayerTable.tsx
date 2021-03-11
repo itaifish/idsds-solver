@@ -22,7 +22,7 @@ class PlayerTable extends React.Component<PlayerTableProps, PlayerTableState> {
 		const playerTable: JSX.Element[] = [];
 		const players = this.props.game.players; 
 		if(players[0]) {
-			const headerMoves: JSX.Element[] = [<th key={-1}></th>];
+			const headerMoves: JSX.Element[] = [<th key={-1}>{players[0].name} {'→'} {players.length > 1 ? players[1].name : ""} {"↓"} </th>];
 			players[0].moveNames.forEach((move, index) => {
 				headerMoves.push(
 					<th key={index}>{move}</th>

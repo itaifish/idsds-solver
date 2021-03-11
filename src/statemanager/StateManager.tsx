@@ -21,6 +21,7 @@ class StateManager extends React.Component<StateManagerProps, StateManagerState>
 			addingPlayer: false 
 		};
 		this.addPlayer = this.addPlayer.bind(this);
+		this.switchPlayerOrder = this.switchPlayerOrder.bind(this);
 		this.updatePayoff = this.updatePayoff.bind(this);
 	}
 
@@ -73,6 +74,21 @@ class StateManager extends React.Component<StateManagerProps, StateManagerState>
 		});
 	}
 
+	switchPlayerOrder() {
+		if(this.state.game && this.state.game.players.length >= 2) {
+			const newPlayers = [...this.state.game.players];
+			let removingVal = newPlayers[1];
+			newPlayers.splice(1, 1);
+			this.setState({
+				game: {
+					players: newPlayers,
+					payoffs: []
+				}
+			});
+			this.addPlayer(removingVal.name, removingVal.moveNames);
+		}
+	}
+
 	render() { 
 		return (
 		<Container>
@@ -82,6 +98,7 @@ class StateManager extends React.Component<StateManagerProps, StateManagerState>
 				:
 				<Button onClick={() => {this.setState({addingPlayer: true})}}>Add Player</Button>
 			}
+			<Button variant="warning" onClick={this.switchPlayerOrder}>Switch Player Order 🔁</Button>
 		</Container>
 		);
 	}
