@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Game from '../interfaces/Game';
+import Game, { copyGame } from '../interfaces/Game';
 
 export interface SolverProps {
 	game: Game;
@@ -22,10 +22,7 @@ class Solver extends React.Component<SolverProps, SolverState> {
 		if(this.props.game.players.length < 2) {
 			return;
 		}
-		let workingSolution: Game = {
-			players: [...this.props.game.players],
-			payoffs: [...this.props.game.payoffs]
-		};
+		let workingSolution: Game = copyGame(this.props.game);
 		let log: string[] = [];
 		
 		// check player 0 for IDSDS
@@ -53,10 +50,15 @@ class Solver extends React.Component<SolverProps, SolverState> {
 				}
 			}
 		}
+		
 		movesToDelete.forEach(moveToDelete => {
 			const index = workingSolution.players[0].moveNames.indexOf(moveToDelete);
-			workingSolution.payoffs.splice(index, 1);
-			workingSolution.players[0].moveNames.splice(index, 1);
+			if(index > -1) {
+				workingSolution.payoffs.splice(index, 1);
+            	workingSolution.players[0].moveNames.splice(index, 1);
+			} else {
+				console.log(`couldnt find ${moveToDelete}`);
+			}
 		});
 
 		/*
@@ -96,13 +98,14 @@ class Solver extends React.Component<SolverProps, SolverState> {
 
 		*/
 
-		return log;
+		return workingSolution;
 	}
 
 	render() { 
 		return (
 			<p>
 				Solution: {JSON.stringify(this.solve())}
+				<br></br>
 				From: {JSON.stringify(this.props.game)}
 			</p>
 		);
