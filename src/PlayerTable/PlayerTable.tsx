@@ -43,18 +43,8 @@ class PlayerTable extends React.Component<PlayerTableProps, PlayerTableState> {
 					<td key={indexP1}>
 						<InputGroup>
 							<InputGroup.Prepend>
-								<InputGroup.Text>{players[0].name} / {players[1].name}</InputGroup.Text>
+								<InputGroup.Text>{players[1].name} / {players[0].name}</InputGroup.Text>
 							</InputGroup.Prepend>
-							<FormControl
-								placeholder={`${players[0].name} Payoff`}
-								value={this.props.game.payoffs[indexP1][indexP2][0]}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									const parsedResult = +(event.target.value);
-									if(!isNaN(parsedResult)) {
-										this.props.updateMoveValuesFunc([indexP1, indexP2, 0], parsedResult);
-									}
-								}}
-							/>
 							<FormControl
 								placeholder={`${players[1].name} Payoff`}
 								value={this.props.game.payoffs[indexP1][indexP2][1]}
@@ -62,6 +52,16 @@ class PlayerTable extends React.Component<PlayerTableProps, PlayerTableState> {
 									const parsedResult = +(event.target.value);
 									if(!isNaN(parsedResult)) {
 										this.props.updateMoveValuesFunc([indexP1, indexP2, 1], parsedResult);
+									}
+								}}
+							/>
+							<FormControl
+								placeholder={`${players[0].name} Payoff`}
+								value={this.props.game.payoffs[indexP1][indexP2][0]}
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+									const parsedResult = +(event.target.value);
+									if(!isNaN(parsedResult)) {
+										this.props.updateMoveValuesFunc([indexP1, indexP2, 0], parsedResult);
 									}
 								}}
 							/>
