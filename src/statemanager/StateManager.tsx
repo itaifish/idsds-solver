@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import AddPlayer from '../AddPlayer/AddPlayer';
 import Game from "../interfaces/Game";
 import PlayerTable from '../PlayerTable/PlayerTable';
+import Solver from '../Solution/Solver';
 
 export interface StateManagerProps {
 	
@@ -99,6 +100,10 @@ class StateManager extends React.Component<StateManagerProps, StateManagerState>
 				<Button onClick={() => {this.setState({addingPlayer: true})}}>Add Player</Button>
 			}
 			<Button variant="warning" onClick={this.switchPlayerOrder}>Switch Player Order 🔁</Button>
+			{this.state.game ?
+			<Row>
+				<Solver game={this.state.game}></Solver>
+			</Row> : <></>}
 		</Container>
 		);
 	}
